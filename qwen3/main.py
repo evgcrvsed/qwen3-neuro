@@ -1,13 +1,16 @@
+# pip install transformers, kagglehub, accelerate, torch
+# pip install torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import kagglehub, torch, os
+
+print(f'Video card use: {torch.cuda.is_available()}') # должно быть True
+print(f'Video card: {torch.cuda.get_device_name() if torch.cuda.is_available() else 'None'}')  # имя твоей видеокарты
 
 model_name = kagglehub.model_download("qwen-lm/qwen-3/transformers/0.6b")
 os.system('cls')
 print('Model path:')
 print(model_name) # Если что, то модель находится по этому пути! Так что при желании можно удалить!
-
-print(f'Video card use: {torch.cuda.is_available()}')  # должно быть True
-print(f'Video card: {torch.cuda.get_device_name()}')  # имя твоей видеокарты
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(
