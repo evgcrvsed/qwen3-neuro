@@ -2,7 +2,6 @@
 # pip install torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 from pprint import pprint
 
-
 class QwenBot:
     def __init__(self):
         from collections import defaultdict
@@ -31,6 +30,7 @@ class QwenBot:
     def get_answer(self, user_id: int, text: str) -> str:
         # Добавляем сообщение пользователя
         self.user_messages[user_id].append({"role": "user", "content": text})
+        # self.user_messages[user_id] = {"role": "user", "content": text}
 
         # Создаем текст для генерации
         prompt_text = self.tokenizer.apply_chat_template(
@@ -44,10 +44,10 @@ class QwenBot:
         # Генерация
         outputs = self.model.generate(
             **inputs,
-            max_new_tokens=512,
+            max_new_tokens=1024,
             do_sample=True,
-            temperature=0.4,
-            top_p=0.8,
+            temperature=0.6,
+            top_p=0.9,
             repetition_penalty=1.2,
             eos_token_id=self.tokenizer.eos_token_id,
         )
